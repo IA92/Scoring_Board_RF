@@ -1,12 +1,11 @@
 //Badminton Score Board with Team Serving
 #include <SPI.h>        //SPI.h must be included as DMD is written by SPI (the IDE complains otherwise)
-#include <DMD.h>        //
-#include <TimerOne.h>   //
+#include "DMD.h"        //
+#include "TimerOne.h"   //
 #include "SystemFont5x7.h"
-#include "Arial_black_16.h"
 #include "Droid_Sans_12.h"
 
-#include <RCSwitch.h>
+#include "RCSwitch.h"
 
 RCSwitch mySwitch = RCSwitch();
 
@@ -259,4 +258,3 @@ void loop() {
     }
   
 }
-
