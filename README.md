@@ -2,6 +2,8 @@
 An archive of old scoring board project for badminton games.
 Note: Code are not well written and managed. Instructions are not fully accurate.
 
+Link to project video: https://youtu.be/4vFphWg7GTI
+
 ## Version of arduino files
 - scoringBoard.ino: Testing LED panel
 - scoringIR.ino, scoringIR_1 and scoringIR_2: 1 LED panel with IR instructions
