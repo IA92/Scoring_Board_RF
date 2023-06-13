@@ -130,7 +130,7 @@ void loop() {
       mySwitch.resetAvailable();
       Serial.println(currentButton);
       Serial.println(secondButton);
-      if (countPress==10){
+      if (countPress==5){
         if (currentButton==buttonCodes[3]){
           setB=setB-1;
           Serial.println("SetB-");
@@ -171,7 +171,7 @@ void loop() {
         mySwitch.resetAvailable();
         drawSet(setA, setB);
       }
-      else if (countPress==15){
+      else if (countPress==10){
         toggle = toggle? false : true;
         serve = serve + 1;
         int tempA = scoreA;
@@ -191,7 +191,7 @@ void loop() {
         mySwitch.resetAvailable();
         drawSet(setA, setB);
       }
-      else if (countPress==25){
+      else if (countPress==20){
       Serial.println("in countpress>25");
 //      if ((currentButton==buttonCodes[0] || currentButton==buttonCodes[1]) && (secondButton==buttonCodes[2] || secondButton==buttonCodes[3]) ){
         setA=0;
@@ -225,7 +225,7 @@ void loop() {
     }
     
     
-    else if (countPress<10){
+    else if (countPress<5){
       currentButton=secondButton;
       countPress=1;
       if (currentButton!=buttonCodes[9] && currentButton!="0"){
