@@ -29,7 +29,7 @@ int scoreX=17;
 int scoreX_s=25;
 int scoreYA=0;
 int scoreYB=16;
-int setX=13;
+int setX=12;
 int setYA=3;
 int setYB=19;
 int serve;
