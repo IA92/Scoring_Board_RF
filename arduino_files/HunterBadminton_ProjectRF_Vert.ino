@@ -38,24 +38,35 @@ void ScanDMD()
 { 
   dmd.scanDisplayBySPI();
 }
-void clearRowServe(){
-  for (int j=17;j<32;j++){   //Column
-    for (int i=30;i<32;i++){  //Row
-      dmd.writePixel(  j,i, GRAPHICS_NORMAL,0);
-    }
-  }
-  for (int j=17;j<32;j++){   //Column
-    for (int i=14;i<16;i++){  //Row
+void clearPixels(int column_start, int column_end, int row_start, int row_end){
+  for (int j=column_start;j<column_end;j++){   //Column
+    for (int i=row_start;i<row_end;i++){  //Row
       dmd.writePixel(  j,i, GRAPHICS_NORMAL,0);
     }
   }
 }
 void drawServe(int Team){
-  clearRowServe();
+  clearPixels(17, 32, 30, 32);
+  clearPixels(17, 32, 14, 16);
   dmd.drawFilledBox(  17, (Team-1)*2+Team*14,31,(Team-1)*2+Team*14+1,GRAPHICS_NORMAL );
 }
 
+void drawSet(int setA, int setB){
+  dmd.selectFont(SystemFont5x7);      
+  itoa (setA, setAbuff, 10);itoa (setB, setBbuff, 10);
+  if (setA>0) 
+    dmd.drawString(  setX,  setYA,  setAbuff, 1, GRAPHICS_NORMAL );
+  else
+    clearPixels(setX, scoreX, setYA, 14);
+    
+  if (setB>0) 
+    dmd.drawString(  setX,  setYB, setBbuff, 1, GRAPHICS_NORMAL );
+  else
+    clearPixels(setX, scoreX, setYB, 28);
+}
+
 void drawScore(int8_t scoreAtemp, int8_t scoreBtemp){
+  dmd.selectFont(fixednums7x15);
   if (scoreAtemp<10){
     dmd.drawString(  scoreX,  scoreYA, "0", 2, GRAPHICS_NORMAL );
     dmd.drawString(  scoreX_s,  scoreYA, itoa (scoreAtemp, scoreAbuff, 10), 2, GRAPHICS_NORMAL );
@@ -98,12 +109,7 @@ void setup() {
   dmd.selectFont(Arial_Black_16);   
   dmd.drawChar(  0,  scoreYA,  'A', GRAPHICS_NORMAL );
   dmd.drawChar(  0,  scoreYB,  'N', GRAPHICS_NORMAL );
-  dmd.selectFont(SystemFont5x7);
-   itoa (setA, setAbuff, 10);
-   itoa (setB, setBbuff, 10);
-   if (setA) dmd.drawString(  setX,  setYA,  setAbuff, 1, GRAPHICS_NORMAL );
-   if (setB) dmd.drawString(  setX,  setYB, setBbuff, 1, GRAPHICS_NORMAL );
-   dmd.selectFont(fixednums7x15);
+  drawSet(setA, setB);
    drawScore(scoreA, scoreB);
 //   dmd.drawFilledBox(17,14,31,15,GRAPHICS_NORMAL);
    drawServe(serve);
@@ -166,14 +172,22 @@ void loop() {
           drawServe(serve);
         }
         mySwitch.resetAvailable();
-        dmd.selectFont(SystemFont5x7);      
-        itoa (setA, setAbuff, 10);itoa (setB, setBbuff, 10);
-        if (setA) dmd.drawString(  setX,  setYA,  setAbuff, 1, GRAPHICS_NORMAL );
-        if (setB) dmd.drawString(  setX,  setYB, setBbuff, 1, GRAPHICS_NORMAL );
-        dmd.selectFont(fixednums7x15);
+        drawSet(setA, setB);
       }
-      else if (countPress==20){
-      Serial.println("in countpress>20");
+      else if (countPress==15){
+        int tempA = scoreA;
+        scoreA=scoreB;
+        scoreB=tempA;
+        tempA = setA;
+        setA = setB;
+        setB = tempA;
+        drawScore(scoreA, scoreB);
+        drawServe(serve);
+        mySwitch.resetAvailable();
+        drawSet(setA, setB);
+      }
+      else if (countPress==25){
+      Serial.println("in countpress>25");
 //      if ((currentButton==buttonCodes[0] || currentButton==buttonCodes[1]) && (secondButton==buttonCodes[2] || secondButton==buttonCodes[3]) ){
         setA=0;
         setB=0;
@@ -201,11 +215,7 @@ void loop() {
         }
         countPress=0;
         mySwitch.resetAvailable();
-        dmd.selectFont(SystemFont5x7);
-        itoa (setA, setAbuff, 10);itoa (setB, setBbuff, 10);
-        if (setA) dmd.drawString(  setX,  setYA,  setAbuff, 1, GRAPHICS_NORMAL );
-        if (setB) dmd.drawString(  setX,  setYB, setBbuff, 1, GRAPHICS_NORMAL );
-        dmd.selectFont(fixednums7x15);
+        drawSet(setA, setB);
     }
     }
     
@@ -259,11 +269,7 @@ void loop() {
           drawServe(serve);
         }
         mySwitch.resetAvailable();
-        dmd.selectFont(SystemFont5x7);
-        itoa (setA, setAbuff, 10);itoa (setB, setBbuff, 10);
-        if (setA) dmd.drawString(  setX,  setYA,  setAbuff, 1, GRAPHICS_NORMAL );
-        if (setB)dmd.drawString(  setX,  setYB, setBbuff, 1, GRAPHICS_NORMAL );
-        dmd.selectFont(fixednums7x15);
+        drawSet(setA, setB);
       }
     }
     timePress=millis();
