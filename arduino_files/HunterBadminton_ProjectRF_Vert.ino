@@ -29,9 +29,9 @@ int scoreX=17;
 int scoreX_s=25;
 int scoreYA=0;
 int scoreYB=16;
-int setX=11;
-int setYA=1;
-int setYB=17;
+int setX=13;
+int setYA=3;
+int setYB=19;
 int serve;
 bool toggle;
 void ScanDMD()
@@ -53,14 +53,13 @@ void drawServe(int Team){
 
 void drawSet(int setA, int setB){
   dmd.selectFont(SystemFont5x7);      
-  itoa (setA, setAbuff, 10);itoa (setB, setBbuff, 10);
-  if (setA>0) 
-    dmd.drawString(  setX,  setYA,  setAbuff, 1, GRAPHICS_NORMAL );
+  if (setA==1) 
+    dmd.drawChar(  setX,  setYA,  '1', GRAPHICS_NORMAL );
   else
     clearPixels(setX, scoreX, setYA, 14);
     
-  if (setB>0) 
-    dmd.drawString(  setX,  setYB, setBbuff, 1, GRAPHICS_NORMAL );
+  if (setB==1) 
+    dmd.drawChar(  setX,  setYB,  '1', GRAPHICS_NORMAL );
   else
     clearPixels(setX, scoreX, setYB, 28);
 }
@@ -106,9 +105,11 @@ void setup() {
   //clear/init the DMD pixels held in RAM
   dmd.clearScreen( true );   //true is normal (all pixels off), false is negative (all pixels on)
   //initializing
-  dmd.selectFont(Arial_Black_16);   
-  dmd.drawChar(  0,  scoreYA,  'A', GRAPHICS_NORMAL );
-  dmd.drawChar(  0,  scoreYB,  'N', GRAPHICS_NORMAL );
+  dmd.selectFont(SystemFont5x7);   
+  dmd.drawString(  0,  scoreYA,  "SE", 2, GRAPHICS_NORMAL );
+  dmd.drawString(  0,  scoreYA+8,  "AT", 2, GRAPHICS_NORMAL );
+  dmd.drawString(  0,  scoreYB,  "WA", 2, GRAPHICS_NORMAL );
+  dmd.drawString(  0,  scoreYB+8,  "LL", 2, GRAPHICS_NORMAL );
   drawSet(setA, setB);
    drawScore(scoreA, scoreB);
 //   dmd.drawFilledBox(17,14,31,15,GRAPHICS_NORMAL);
@@ -138,8 +139,6 @@ void loop() {
           if (setA+setB<3) setB=setB+1;
           Serial.println("SetB+");
           serve=2;
-          scoreA=0;
-          scoreB=0;
           toggle=true;
         }
         else if (currentButton==buttonCodes[2]){
@@ -150,8 +149,6 @@ void loop() {
           if (setA+setB<3) setA=setA+1;
           Serial.println("SetA+");
           serve=1;
-          scoreA=0;
-          scoreB=0;
           toggle=false;
         }
         if (scoreA<0) scoreA=0;
@@ -175,14 +172,22 @@ void loop() {
         drawSet(setA, setB);
       }
       else if (countPress==15){
+        toggle = toggle? false : true;
+        serve = serve + 1;
         int tempA = scoreA;
         scoreA=scoreB;
         scoreB=tempA;
-        tempA = setA;
-        setA = setB;
-        setB = tempA;
+        setA = 0;
+        setB = 0;
         drawScore(scoreA, scoreB);
         drawServe(serve);
+        if (serve>2) {
+          serve=1;
+          drawServe(serve);
+        } else if (serve<1){
+          serve=2;
+          drawServe(serve);
+        }
         mySwitch.resetAvailable();
         drawSet(setA, setB);
       }
