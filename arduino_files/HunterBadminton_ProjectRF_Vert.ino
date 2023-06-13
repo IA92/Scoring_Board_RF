@@ -29,9 +29,9 @@ int scoreX=17;
 int scoreX_s=25;
 int scoreYA=0;
 int scoreYB=16;
-int setAX=6;
-int setBX=21;
-int setY=19;
+int setX=11;
+int setYA=1;
+int setYB=17;
 int serve;
 bool toggle;
 void ScanDMD()
@@ -98,11 +98,11 @@ void setup() {
   dmd.selectFont(Arial_Black_16);   
   dmd.drawChar(  0,  scoreYA,  'A', GRAPHICS_NORMAL );
   dmd.drawChar(  0,  scoreYB,  'N', GRAPHICS_NORMAL );
-//   itoa (setA, setAbuff, 10);
-//   itoa (setB, setBbuff, 10);
-//   dmd.drawString(  setAX,  setY,  setAbuff, 1, GRAPHICS_NORMAL );
-//   dmd.drawString(  setBX,  setY, setBbuff, 1, GRAPHICS_NORMAL );
-//   dmd.drawFilledBox(17,29,31,30,GRAPHICS_NORMAL);
+  dmd.selectFont(SystemFont5x7);
+   itoa (setA, setAbuff, 10);
+   itoa (setB, setBbuff, 10);
+   if (setA) dmd.drawString(  setX,  setYA,  setAbuff, 1, GRAPHICS_NORMAL );
+   if (setB) dmd.drawString(  setX,  setYB, setBbuff, 1, GRAPHICS_NORMAL );
    dmd.selectFont(fixednums7x15);
    drawScore(scoreA, scoreB);
 //   dmd.drawFilledBox(17,14,31,15,GRAPHICS_NORMAL);
@@ -166,10 +166,10 @@ void loop() {
           drawServe(serve);
         }
         mySwitch.resetAvailable();
-//        dmd.selectFont(SystemFont5x7);      
-//        itoa (setA, setAbuff, 10);itoa (setB, setBbuff, 10);
-//        dmd.drawString(  setAX,  setY,  setAbuff, 1, GRAPHICS_NORMAL );
-//        dmd.drawString(  setBX,  setY, setBbuff, 1, GRAPHICS_NORMAL );
+        dmd.selectFont(SystemFont5x7);      
+        itoa (setA, setAbuff, 10);itoa (setB, setBbuff, 10);
+        if (setA) dmd.drawString(  setX,  setYA,  setAbuff, 1, GRAPHICS_NORMAL );
+        if (setB) dmd.drawString(  setX,  setYB, setBbuff, 1, GRAPHICS_NORMAL );
         dmd.selectFont(fixednums7x15);
       }
       else if (countPress==20){
@@ -201,10 +201,10 @@ void loop() {
         }
         countPress=0;
         mySwitch.resetAvailable();
-//        dmd.selectFont(SystemFont5x7);
-//        itoa (setA, setAbuff, 10);itoa (setB, setBbuff, 10);
-//        dmd.drawString(  setAX,  setY,  setAbuff, 1, GRAPHICS_NORMAL );
-//        dmd.drawString(  setBX,  setY, setBbuff, 1, GRAPHICS_NORMAL );
+        dmd.selectFont(SystemFont5x7);
+        itoa (setA, setAbuff, 10);itoa (setB, setBbuff, 10);
+        if (setA) dmd.drawString(  setX,  setYA,  setAbuff, 1, GRAPHICS_NORMAL );
+        if (setB) dmd.drawString(  setX,  setYB, setBbuff, 1, GRAPHICS_NORMAL );
         dmd.selectFont(fixednums7x15);
     }
     }
@@ -259,10 +259,10 @@ void loop() {
           drawServe(serve);
         }
         mySwitch.resetAvailable();
-//        dmd.selectFont(SystemFont5x7);
-//        itoa (setA, setAbuff, 10);itoa (setB, setBbuff, 10);
-//        dmd.drawString(  setAX,  setY,  setAbuff, 1, GRAPHICS_NORMAL );
-//        dmd.drawString(  setBX,  setY, setBbuff, 1, GRAPHICS_NORMAL );
+        dmd.selectFont(SystemFont5x7);
+        itoa (setA, setAbuff, 10);itoa (setB, setBbuff, 10);
+        if (setA) dmd.drawString(  setX,  setYA,  setAbuff, 1, GRAPHICS_NORMAL );
+        if (setB)dmd.drawString(  setX,  setYB, setBbuff, 1, GRAPHICS_NORMAL );
         dmd.selectFont(fixednums7x15);
       }
     }
